@@ -1,0 +1,14 @@
+
+
+
+Metric: revenue
+
+Best model: auto.ARIMA
+
+Average effect size: 6873.20
+CI 95 [-3017.23, 16763.63]
+CI 80 [406.19, 13340.21]
+
+Cumulative effect size: 226815.62
+CI 95 [-99568.65, 553199.88]
+CI 80 [13404.42, 440226.82]

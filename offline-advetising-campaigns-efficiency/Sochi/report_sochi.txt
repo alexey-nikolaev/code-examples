@@ -1,0 +1,193 @@
+
+
+
+Metric: orders
+
+Best model: auto.ARIMA
+
+Average effect size: 4.01
+CI 95 [-0.73, 8.74]
+CI 80 [0.91, 7.10]
+
+Cumulative effect size: 132.28
+CI 95 [-23.99, 288.56]
+CI 80 [30.10, 234.46]
+
+
+Metric: riders
+
+Best model: BSTS LocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average       Cumulative    
+Actual                   8.3           274.0         
+Prediction (s.d.)        7 (2)         233 (65)      
+95% CI                   [3.2, 11]     [104.9, 366]  
+                                                     
+Absolute effect (s.d.)   1.3 (2)       41.4 (65)     
+95% CI                   [-2.8, 5.1]   [-92.2, 169.1]
+                                                     
+Relative effect (s.d.)   18% (28%)     18% (28%)     
+95% CI                   [-40%, 73%]   [-40%, 73%]   
+
+Posterior tail-area probability p:   0.2574
+Posterior prob. of a causal effect:  74%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: firstorders
+
+Best model: auto.ARIMA
+
+Average effect size: 1.23
+CI 95 [-1.18, 3.64]
+CI 80 [-0.35, 2.80]
+
+Cumulative effect size: 40.52
+CI 95 [-39.07, 120.11]
+CI 80 [-11.53, 92.56]
+
+
+Metric: newusers
+
+Best model: auto.ARIMA
+
+Average effect size: 2.14
+CI 95 [-0.45, 4.74]
+CI 80 [0.45, 3.84]
+
+Cumulative effect size: 70.76
+CI 95 [-14.83, 156.35]
+CI 80 [14.80, 126.72]
+
+
+Metric: businessorders
+
+Best model: auto.ARIMA
+
+Average effect size: 3.79
+CI 95 [0.47, 7.11]
+CI 80 [1.62, 5.96]
+
+Cumulative effect size: 125.00
+CI 95 [15.42, 234.58]
+CI 80 [53.35, 196.65]
+
+
+Metric: businessfirstorders
+
+Best model: auto.ARIMA
+
+Average effect size: 0.98
+CI 95 [-0.86, 2.81]
+CI 80 [-0.23, 2.18]
+
+Cumulative effect size: 32.19
+CI 95 [-28.41, 92.80]
+CI 80 [-7.43, 71.82]
+
+
+Metric: quotes
+
+Best model: BSTS GeneralizedLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average         Cumulative     
+Actual                   1149            37918          
+Prediction (s.d.)        892 (862)       29442 (28457)  
+95% CI                   [-803, 2587]    [-26515, 85356]
+                                                        
+Absolute effect (s.d.)   257 (862)       8476 (28457)   
+95% CI                   [-1438, 1953]   [-47438, 64433]
+                                                        
+Relative effect (s.d.)   29% (97%)       29% (97%)      
+95% CI                   [-161%, 219%]   [-161%, 219%]  
+
+Posterior tail-area probability p:   0.37696
+Posterior prob. of a causal effect:  62%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: quotedusers
+
+Best model: BSTS GeneralizedLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average       Cumulative 
+Actual                   30            1001       
+Prediction (s.d.)        28 (12)       926 (391)  
+95% CI                   [5, 52]       [164, 1711]
+                                                  
+Absolute effect (s.d.)   2.3 (12)      75.3 (391) 
+95% CI                   [-22, 25]     [-710, 837]
+                                                  
+Relative effect (s.d.)   8.1% (42%)    8.1% (42%) 
+95% CI                   [-77%, 90%]   [-77%, 90%]
+
+Posterior tail-area probability p:   0.4208
+Posterior prob. of a causal effect:  58%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: ordersairport
+
+Best model: auto.ARIMA
+
+Average effect size: 1.76
+CI 95 [-0.50, 4.02]
+CI 80 [0.28, 3.24]
+
+Cumulative effect size: 58.07
+CI 95 [-16.48, 132.62]
+CI 80 [9.33, 106.82]
+
+
+Metric: ordersfromairport
+
+Best model: auto.ARIMA
+
+Average effect size: 1.05
+CI 95 [-1.06, 3.17]
+CI 80 [-0.33, 2.44]
+
+Cumulative effect size: 34.77
+CI 95 [-35.13, 104.67]
+CI 80 [-10.93, 80.47]
+
+
+Metric: businessordersairport
+
+Best model: auto.ARIMA
+
+Average effect size: 1.44
+CI 95 [-0.34, 3.22]
+CI 80 [0.27, 2.60]
+
+Cumulative effect size: 47.44
+CI 95 [-11.31, 106.18]
+CI 80 [9.03, 85.85]
+
+
+Metric: businessordersfromairport
+
+Best model: auto.ARIMA
+
+Average effect size: 0.59
+CI 95 [-0.98, 2.16]
+CI 80 [-0.44, 1.62]
+
+Cumulative effect size: 19.45
+CI 95 [-32.40, 71.30]
+CI 80 [-14.46, 53.36]
