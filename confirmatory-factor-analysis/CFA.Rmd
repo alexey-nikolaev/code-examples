@@ -1,0 +1,194 @@
+---
+title: "Конфирматорный факторный анализ"
+output: html_notebook
+---
+
+```{r}
+library(tidyr)
+library(dplyr)
+library(magrittr)
+library(sjmisc)
+library(ggplot2)
+library(haven)
+
+full_ess <- haven::read_sav("ESS7e02_1.sav")
+```
+Подключаем основные необходимые пакеты и загружаем полный набор данных.
+
+```{r}
+countries <- unique(full_ess$cntry)
+print(countries)
+```
+Выводим коды стран. Нам понадобится код Венгрии.
+
+```{r}
+HU.values <- full_ess %>% filter(cntry=="HU") %>% 
+  dplyr::select("fltdpr", "flteeff", "slprl",
+                "wrhpp", "fltlnl", "enjlf",
+                "fltsd", "cldgng") %>% 
+  set_colnames(c("depressed", "everything_as_effort",
+                 "restless_sleep", "happy",
+                 "lonely", "enjoyed_life",
+                 "sad", "could_not_get_going"))  %>%
+  na.omit
+
+save(HU.values, file="HU.values.R")
+```
+Выбираем из полного набора данных часть, с которой будем работать (Венгрия, шкала настроения E20-E27). Даем переменным удобные для интерпретации названия.
+
+Вначале проводим разведывательный факторный анализ.
+
+```{r}
+library(nFactors)
+plot(nScree(cov(HU.values)))
+```
+Определяем число факторов. Большинство критериев предлагает выбрать число факторов равным 2. Для сравнения также построим также модели с 1 и 3 факторами.
+
+```{r}
+library("GPArotation")
+formulaEFA <- as.formula("~depressed + everything_as_effort + restless_sleep + happy + lonely + enjoyed_life + sad + could_not_get_going")
+EFA1 <- factanal(formulaEFA, factors=1, data=HU.values,
+                 #rotation = "geominQ",
+                 na.action=na.exclude)
+EFA1
+```
+Строим модель с 1 фактором.
+
+```{r}
+EFA2 <- factanal(formulaEFA, factors=2, data=HU.values,
+                 #rotation = "geominQ",
+                 na.action=na.exclude)
+EFA2
+```
+C 2 факторами.
+
+```{r}
+EFA3 <- factanal(formulaEFA, factors=3, data=HU.values,
+                 #rotation = "geominQ",
+                 na.action=na.exclude)
+EFA3
+```
+И с 3 факторами.
+
+```{r}
+print(c('1 factor', round(unname(EFA1$STATISTIC), 3), EFA1$dof, round(unname(EFA1$PVAL), 3)), digits = 3)
+print(c('2 factors', round(unname(EFA2$STATISTIC), 3), EFA2$dof, round(unname(EFA2$PVAL), 3)), digits = 3)
+print(c('3 factors', round(unname(EFA3$STATISTIC), 3), EFA3$dof, round(unname(EFA3$PVAL), 3)), digits = 3)
+```
+Так как модели с разным количеством факторов являются вложенными, мы можем сравнить их критерием хи-квадрат. Выведем значения статистики хи-квадрат, число степеней свободы и p-значение теста на значимость хи-квадрата модели для моделей с 1, 2 и 3 факторами. Уже по p-значениям мы можем видеть (они близки к нулю, нулевая гипотеза о корректном представлении факторами исходных данных отвергается), что для 1 и 2 фактора не позволяют хорошо описать исследуемые признаки, необходимо большее число факторов.
+
+```{r}
+chisq.difference_1_2 = unname(EFA1$STATISTIC) - unname(EFA2$STATISTIC)
+df.difference_1_2 = EFA1$dof - EFA2$dof
+1-pchisq(chisq.difference_1_2, df.difference_1_2)
+```
+Cравним модели с 1 и 2 факторами с помощью теста хи-квадрат. В данном случае p-значение очень мало и разница в значениях статистик хи-квадрат значима, модель с 2 факторами лучше.
+
+```{r}
+chisq.difference_2_3 = unname(EFA2$STATISTIC) - unname(EFA3$STATISTIC)
+df.difference_2_3 = EFA2$dof - EFA3$dof
+1-pchisq(chisq.difference_2_3, df.difference_2_3)
+```
+Аналогичным образом сравним модели с 2 и 3 факторами. Согласно критерию хи-квадрат модель с 3 факторами лучше модели с 2 факторами, выберем ее.
+
+```{r}
+EFA3<- factanal(formulaEFA, factors=3, data=HU.values, rotation = "geominQ")
+load3 <- as.data.frame.matrix(EFA3$loadings)
+round(load3,2)
+```
+Построим модель с 3 факторами с вращением факторов и выведем факторные нагрузки. Так как факторов больше 2, график выводить не будем. Второй фактор ассоциирован с счастьем и удовольствием от жизни, назовем его "Joy" (радость). Первый - беспокойством, усталостью, напряжением, подавленностью. Назовем его "Tension" (напряжение). Третий - с печалью, одиночеством, растерянностью, отсутствием жизненных сил. Назовем его "Devastation" (опустошенность).
+
+Далее проведем конфирматорный факторный анализ для проверки сформированных выше гипотезах о трех факторах (латентных переменных).
+
+```{r}
+library(lavaan)
+
+cfa3<- cfa(model="Joy =~ happy + enjoyed_life;
+           Tension =~ everything_as_effort + restless_sleep + depressed;
+           Devastation =~ sad + lonely + could_not_get_going",
+           data=as.matrix(HU.values))
+
+cfa3
+```
+Для каждого фактора первой переменной (будет иметь факторную нагрузку 1) выбираем ту, которая наиболее надежно отражает данный фактор (определяем по таблице факторных нагрузок, представленной выше).
+
+```{r}
+summary(cfa3, fit.measures=TRUE)
+```
+Выводим критерии согласия модели с данными.
+
+```{r}
+cfa2<- cfa(model="Positive =~ happy + enjoyed_life;
+           Negative =~ everything_as_effort + restless_sleep + depressed + sad + lonely + could_not_get_going",
+           data=as.matrix(HU.values))
+
+cfa2
+```
+Построим для сравнения модель с 2 факторами, в которой один фактор будет соответствовать позитивным характеристикам настроения, другой - негативным. Затем выведем критерии согласия этой двухфакторной модели с данными.
+
+```{r}
+summary(cfa2, fit.measures=TRUE)
+```
+Так как модели с 2 и 3 факторами здесь не являются вложенными, для их сравнения будем использовать не критерий хи-квадрат, а критерии AIC и BIC (чем их значения ниже, тем лучше модель). В данном случае значения AIC и BIC ниже для модели с 3 факторами, выбираем ее. Наша изначальная гипотеза о наличии в модели 3 факторов подтверждается.
+
+Для модели с 3 факторами p-значения тестов на значимость модели в целом и отдельных переменных очень низки и указывают на хорошее согласие модели. Посмотрим, сможем ли мы его улучшить, используя модификационные индексы.
+
+```{r}
+modindices(cfa3, minimum.value = 10, sort=TRUE)
+```
+Наибольший модификационный индекс имеет добавление переменной lonely к фактору Joy. Ожидаемое значение параметра (epc) здесь отрицательное, действительно, одиночество определенно снижает радость и удовлетворенность жизнью. То же можно сказать и о Joy =~ depressed. Связь Tension =~ could_not_get_going тоже вполне оправдана, невозможность что-либо начать, сдвинуться с места вызывает напряжение. Отрицательная связь Tension =~ lonely едва ли оправдана, одиночество не должно снижать напряжение, беспокойство и депрессивность. Положительная корреляция остатков sad ~~ lonely оправдана, печаль и одиночество связаны, отрицательная связь lonely ~~ could_not_get_going вызывает сомнение. Добавим оправданные с точки зрения теории связи в нашу модель. Их всего 4, так что будем надеяться, что это не вызовет слишком сильную подгонку под конкретные выборочные данные.
+
+```{r}
+cfa3.1 <- cfa(model="Joy =~ happy + enjoyed_life;
+           Tension =~ everything_as_effort + restless_sleep + depressed;
+           Devastation =~ sad + lonely + could_not_get_going;
+           Joy =~ lonely;
+           Joy =~ depressed;
+           Tension =~ could_not_get_going;
+           sad ~~ lonely",
+           data=as.matrix(HU.values))
+
+cfa3.1
+```
+В данном случае p-значение много больше 0.05, нулевая гипотеза об идеальном соответствии модели данным не отвергается, качество модели возросло.
+
+```{r}
+lavTestLRT(cfa3, cfa3.1)
+```
+Cравним полученную модель с исходной с помощью теста отношения правдоподобия (можем использовать, так как модели являются вложенными). Значимость *** говорит о том, что значение статистики хи-квадрат модели cfa3.1 значимо уменьшилось по сравнению с моделью cfa3, так что она подходит к данным лучше, выбираем ее.
+
+```{r}
+library(semPlot)
+ semPaths(cfa3.1, nCharNodes=0)
+```
+Построим диаграмму итоговой трехфакторной модели.
+
+```{r}
+fit.index<-data.frame(fitmeasures(cfa2),
+           fitmeasures(cfa3),
+           fitmeasures(cfa3.1)
+           ) %>%
+  set_colnames(c("Двухфакторная модель", "Трехфакторная модель", "Дополненная трехфакторная модель")) %>%
+  extract(c("chisq", "df", "pvalue", "cfi", "tli", "rmsea", "bic"),) 
+
+knitr::kable(fit.index, digits=3, format="html")
+```
+Выведем таблицу с индексами качества различных модификаций модели.
+
+```{r}
+tests <-lavTestLRT(cfa3, cfa3.1)
+
+options(knitr.kable.NA = '')
+knitr::kable(tests, format="html", digits=2)
+```
+Тестирование различий в качестве трехфакторных моделей.
+
+```{r}
+with(cfa3.1@ParTable, data.frame(paste(lhs, op, rhs), 
+                                 round(est, 2), 
+                                 paste("(", round(se, 3), ")", sep="")     
+                                 )) %>%
+  set_colnames(c("Параметр", "Значение", "Ст.ош.")) %>%
+  knitr::kable(format="html", digits=2)
+```
+Параметры итоговой модели.
