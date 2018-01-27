@@ -1,0 +1,265 @@
+
+
+
+Metric: revenue
+
+Best model: BSTS GeneralizedLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average             Cumulative         
+Actual                   4.9e+05             1.4e+07            
+Prediction (s.d.)        4.1e+05 (95620)     1.2e+07 (2772973)  
+95% CI                   [222911, 6.0e+05]   [6464407, 1.7e+07] 
+                                                                
+Absolute effect (s.d.)   80360 (95620)       2330437 (2772973)  
+95% CI                   [-107170, 269769]   [-3107928, 7823289]
+                                                                
+Relative effect (s.d.)   19% (23%)           19% (23%)          
+95% CI                   [-26%, 65%]         [-26%, 65%]        
+
+Posterior tail-area probability p:   0.19521
+Posterior prob. of a causal effect:  80%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: rides
+
+Best model: BSTS GeneralizedLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average       Cumulative   
+Actual                   426           12359        
+Prediction (s.d.)        364 (92)      10551 (2660) 
+95% CI                   [185, 543]    [5379, 15759]
+                                                    
+Absolute effect (s.d.)   62 (92)       1808 (2660)  
+95% CI                   [-117, 241]   [-3400, 6980]
+                                                    
+Relative effect (s.d.)   17% (25%)     17% (25%)    
+95% CI                   [-32%, 66%]   [-32%, 66%]  
+
+Posterior tail-area probability p:   0.24819
+Posterior prob. of a causal effect:  75%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: riders
+
+Best model: BSTS GeneralizedLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average       Cumulative   
+Actual                   278           8066         
+Prediction (s.d.)        255 (60)      7388 (1726)  
+95% CI                   [135, 368]    [3928, 10677]
+                                                    
+Absolute effect (s.d.)   23 (60)       678 (1726)   
+95% CI                   [-90, 143]    [-2611, 4138]
+                                                    
+Relative effect (s.d.)   9.2% (23%)    9.2% (23%)   
+95% CI                   [-35%, 56%]   [-35%, 56%]  
+
+Posterior tail-area probability p:   0.35317
+Posterior prob. of a causal effect:  65%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: firstrides
+
+Best model: BSTS StudentLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average        Cumulative    
+Actual                   8              233           
+Prediction (s.d.)        6.2 (1.1)      179.1 (32.5)  
+95% CI                   [3.9, 8.4]     [114.1, 242.3]
+                                                      
+Absolute effect (s.d.)   1.9 (1.1)      53.9 (32.5)   
+95% CI                   [-0.32, 4.1]   [-9.29, 118.9]
+                                                      
+Relative effect (s.d.)   30% (18%)      30% (18%)     
+95% CI                   [-5.2%, 66%]   [-5.2%, 66%]  
+
+Posterior tail-area probability p:   0.04589
+Posterior prob. of a causal effect:  95.411%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: secondrides
+
+Best model: auto.ARIMA
+
+Average effect size: 2.60
+CI 95 [-5.23, 10.44]
+CI 80 [-2.52, 7.73]
+
+Cumulative effect size: 75.52
+CI 95 [-151.64, 302.67]
+CI 80 [-73.01, 224.05]
+
+
+Metric: newusers
+
+Best model: BSTS GeneralizedLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average       Cumulative 
+Actual                   51            1485       
+Prediction (s.d.)        40 (12)       1166 (339) 
+95% CI                   [17, 64]      [500, 1845]
+                                                  
+Absolute effect (s.d.)   11 (12)       319 (339)  
+95% CI                   [-12, 34]     [-360, 985]
+                                                  
+Relative effect (s.d.)   27% (29%)     27% (29%)  
+95% CI                   [-31%, 84%]   [-31%, 84%]
+
+Posterior tail-area probability p:   0.16573
+Posterior prob. of a causal effect:  83%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: businessrides
+
+Best model: BSTS GeneralizedLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average       Cumulative   
+Actual                   341           9900         
+Prediction (s.d.)        299 (71)      8668 (2057)  
+95% CI                   [159, 436]    [4614, 12650]
+                                                    
+Absolute effect (s.d.)   42 (71)       1232 (2057)  
+95% CI                   [-95, 182]    [-2750, 5286]
+                                                    
+Relative effect (s.d.)   14% (24%)     14% (24%)    
+95% CI                   [-32%, 61%]   [-32%, 61%]  
+
+Posterior tail-area probability p:   0.27442
+Posterior prob. of a causal effect:  73%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: businessfirstrides
+
+Best model: auto.ARIMA
+
+Average effect size: 2.11
+CI 95 [-1.89, 6.10]
+CI 80 [-0.50, 4.72]
+
+Cumulative effect size: 61.17
+CI 95 [-54.67, 177.02]
+CI 80 [-14.57, 136.92]
+
+
+Metric: quotes
+
+Best model: BSTS GeneralizedLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average          Cumulative       
+Actual                   26820            777777           
+Prediction (s.d.)        20229 (7975)     586631 (231279)  
+95% CI                   [4712, 35764]    [136645, 1037155]
+                                                           
+Absolute effect (s.d.)   6591 (7975)      191146 (231279)  
+95% CI                   [-8944, 22108]   [-259378, 641132]
+                                                           
+Relative effect (s.d.)   33% (39%)        33% (39%)        
+95% CI                   [-44%, 109%]     [-44%, 109%]     
+
+Posterior tail-area probability p:   0.20752
+Posterior prob. of a causal effect:  79%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: quotedusers
+
+Best model: BSTS GeneralizedLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average       Cumulative    
+Actual                   726           21055         
+Prediction (s.d.)        586 (186)     16981 (5402)  
+95% CI                   [217, 951]    [6299, 27576] 
+                                                     
+Absolute effect (s.d.)   140 (186)     4074 (5402)   
+95% CI                   [-225, 509]   [-6521, 14756]
+                                                     
+Relative effect (s.d.)   24% (32%)     24% (32%)     
+95% CI                   [-38%, 87%]   [-38%, 87%]   
+
+Posterior tail-area probability p:   0.22097
+Posterior prob. of a causal effect:  78%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: viprides
+
+Best model: BSTS StudentLocalLinearTrend
+
+Posterior inference {CausalImpact}
+
+                         Average        Cumulative   
+Actual                   78             2259         
+Prediction (s.d.)        59 (12)        1723 (339)   
+95% CI                   [38, 80]       [1116, 2309] 
+                                                     
+Absolute effect (s.d.)   18 (12)        536 (339)    
+95% CI                   [-1.7, 39]     [-50.3, 1143]
+                                                     
+Relative effect (s.d.)   31% (20%)      31% (20%)    
+95% CI                   [-2.9%, 66%]   [-2.9%, 66%] 
+
+Posterior tail-area probability p:   0.0301
+Posterior prob. of a causal effect:  96.99%
+
+For more details, type: summary(impact, "report")
+
+
+
+
+Metric: vipfirstrides
+
+Best model: auto.ARIMA
+
+Average effect size: -0.31
+CI 95 [-2.29, 1.68]
+CI 80 [-1.61, 0.99]
+
+Cumulative effect size: -8.88
+CI 95 [-66.55, 48.80]
+CI 80 [-46.59, 28.83]
