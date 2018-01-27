@@ -1,5 +1,5 @@
 Confirmatory Factor Analysis in R (R Markdown).
-Mood scale variables for Hungary (European Social Survey). 
+Mood scale variables for Hungary (European Social Survey, questions Е20-Е27). 
 
 Transformed to 3 factors: 
 Joy =~ happy + enjoyed_life;
